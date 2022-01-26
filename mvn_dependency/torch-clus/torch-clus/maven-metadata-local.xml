@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>torch-clus</groupId>
+  <artifactId>torch-clus</artifactId>
+  <versioning>
+    <versions>
+      <version>0.0.1-SNAPSHOT</version>
+    </versions>
+    <lastUpdated>20210902141200</lastUpdated>
+  </versioning>
+</metadata>
