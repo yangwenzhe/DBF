@@ -30,15 +30,16 @@ public class Main {
     public static ArrayList<HashMap<Long, Double>> histogramList;
     public static HashMap<Integer, ArrayList<double[]>> allHistogram = new HashMap<>();//store all histogram in database except query
     public static int queryDataRowNumber; // number of row querydata in histogram.txt, instead of dataset ID
-    //    public static String DEBUG_LEVEL = "OurAlgorithms";//1,ICT  2,tighter_ICT  3,centroid_WMD  4,removeOneConstraintEMD 5,OurAlgorithms
-
     public static int resolution ;
+    public static ArrayList<Integer> datasetIDList = new ArrayList<>();
     public static String zcurveFilePath;
     public static int decreaseOfResulution = 0;
     public static HashMap<Integer, HashMap<Long,Double>> dataSetMap;
     public static int leaf_Threshold = 5;
-    public static int max_Depth = 20; // 16; // 18; //
-    // 2^20 = 104 8576 ;  2^19 = 52 4288  ;  2^18  =  26 2144;  2^17  = 13 1072 ;  2^16  = 6 5536
+    public static int max_Depth = 20;
+    public static int total_query_count;
+    public static ArrayList<HashMap<Integer,Integer>> resultHashMapList = new ArrayList<>();
+    public static HashMap<Integer,Integer> resultHashMap = new HashMap<>();
     public static String Debug_Level = "setTopK";
     public static int totalNumberOfQuery = 10;
 
@@ -85,11 +86,12 @@ public class Main {
         String[] fourDataSetName = new String[]{"argoverse","trackable","identifiable","public"};//
         String datasetName = fourDataSetName[0];
         resolution = 13; //Note******************
-        int[] topkList = new int[]{1,5,8,10};//{10};
+        int[] topkList = new int[]{5};
         // The generateQuery function randomly generates the query list
         // ArrayList<Integer> arrayList = generateQuery(1, 10000, totalNumberOfQuery);
         int[] queryList = new int[totalNumberOfQuery];
         switch (datasetName){
+            // random select query by randomGeneQuery.java
             case "argoverse": queryList = new int[]{595,91,386,888,378,806,300,317,773,203};
                 totalNumberOfLine = 205942;
                 resolution = 7;
@@ -104,21 +106,20 @@ public class Main {
                 totalNumberOfLine = 235483;
             break;
         }
-        zcurveFilePath = "data\\"+datasetName+"\\"+datasetName+"-"+resolution+".ser";
+        zcurveFilePath ="data\\"+datasetName+"\\"+datasetName+"-"+resolution+".ser";//  "/home/gr/wzyang/java/Argov/Argov"+"-"+resolution+".ser";  //
         dataSetMap = deSerializationZcurve(zcurveFilePath);
         histogramList = generateHistogram();
-
         System.out.println("datasetName ="+datasetName);
-      ArrayList<Integer> arrayList = new ArrayList<>();
+        ArrayList<Integer> arrayList = new ArrayList<>();
 
         for (int i = 0; i<queryList.length; i++){
             arrayList.add(queryList[i]);
         }
         for (int j = 0; j<topkList.length; j++){
             topk = topkList[j];
-//            oneLevelIndex(arrayList,"IM_SIG_star");
-//            oneLevelIndex(arrayList, "ICT");
-//            oneLevelIndex(arrayList, "tighter_ICT");
+            oneLevelIndex(arrayList,"IM_SIG_star");
+            oneLevelIndex(arrayList, "ICT");
+            oneLevelIndex(arrayList, "tighter_ICT");
             twoLevelIndex(arrayList,"OurAlgorithms");
 //            oneLevelIndex(arrayList, "removeOneConstraintEMD");
         }
@@ -170,57 +171,139 @@ public class Main {
         }
 
     }
-    public static void setLeafnode()throws CloneNotSupportedException,IOException{
-        String[] fourDataSetName = new String[]{"argoverse","trackable","identifiable","public"};//
-        String datasetName = fourDataSetName[0];
-        resolution = 7;
-        zcurveFilePath = "data\\"+datasetName+"\\"+datasetName+"-"+resolution+".ser";
-        dataSetMap = deSerializationZcurve(zcurveFilePath);
-        histogramList = generateHistogram();
-        topk = 10;
-        // The generateQuery function randomly generates the query list
-        // ArrayList<Integer> arrayList = generateQuery(1, 10000, totalNumberOfQuery);
-        int[] queryList = new int[10];
-        switch (datasetName){
-            case "argoverse": queryList = new int[]{595,91,386,888,378,806,300,317,773,203};
-                totalNumberOfLine = 205942;
+    public static void dataSkewCorrectRatio(String datasetName, int levelNum, ArrayList<Integer> arrayList, String Debug) throws CloneNotSupportedException,IOException{
+        resultHashMapList.clear();
+        ArrayList<HashMap<Integer,Integer>> hmList = new ArrayList<>();
+        for (int i = 0 ; i<50; i++){
+            HashMap<Integer,Integer> hm = new HashMap<>();
+            hmList.add(hm);
+        }
+        String Path = "/home/gr/wzyang/java/new_add/argov7-topk/"+datasetName+"-sparse.csv";
+        try {
+            String record = "";
+            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(Path)));
+            reader.readLine();//
+            while ((record = reader.readLine()) != null) {
+//                System.out.println("record = "+record);
+                String[] fields = record.split(",");
+                for (int i = 0; i<50; i++){
+                    switch (levelNum) {
+                        case 1:
+                            hmList.get(i).put(Integer.parseInt(fields[i]) - 1, 0);
+                            break;
+                        case 2:
+                            hmList.get(i).put(Integer.parseInt(fields[i]), 0);
+                            break;
+                    }
+                }
+//                hm0.put(Integer.parseInt(fields[0])-1,0);
+            }
+        }catch (IOException e) {
+//            e.printStackTrace();
+        }
+        for (int i = 0; i<hmList.size(); i++){
+            resultHashMapList.add(hmList.get(i));
+        }
+//        resultHashMapList.add(hm0);
+//        resultHashMapList.add(hm1);
+        switch (levelNum){
+            case 1:
+                oneLevelApproaximate(arrayList, Debug);
                 break;
-            case "trackable": queryList = new int[]{3815,13583,13583,1316,384,5182,1236,17564,6423,13331};
-                totalNumberOfLine = 66380;
-                break;
-            case "public":queryList = new int[]{9245,5186,15522,3692,10116,6843,14086,7028,3815,13583};
-                totalNumberOfLine =  546193;
-                break;
-            case "identifiable":queryList = new int[]{8164,9245,5186,15522,3692,10116,6843,14086,7028,3815};
-                totalNumberOfLine = 235483;
+            case 2:
+                twoLevelApproaximate(arrayList, Debug);
                 break;
         }
+
+        double[] percent = new double[resultHashMapList.size()];
+        double average_percent = 0.0;
+        for (int a=0; a<resultHashMapList.size(); a++){
+            int total = 0;
+            int correct = 0;
+            for (int id:resultHashMapList.get(a).keySet()){
+                total++;
+                correct+=resultHashMapList.get(a).get(id);
+            }
+            percent[a] = (double) correct/total;
+
+//                System.out.println("percent["+a+"] = "+percent[a]);
+            average_percent+= (double) correct/total;
+        }
+        average_percent =(double) average_percent/percent.length;
+        System.out.println("correct percent ===================="+average_percent);
+    }
+    public static void dataSkew() throws IOException,CloneNotSupportedException{
+        String[] fourDataSetName = new String[]{"trackable","identifiable","public","Argov"};//
+        int name = Integer.parseInt(System.getProperty("name"));
+        String datasetName = fourDataSetName[name];
+        int[] topkList = new int[6];
+        resolution = 13;
+        int[] queryList = new int[30];
+        int[] sparse = new int[50];
+        int[] dense = new int[50];
+        int[] sparse2 = new int[50];
+        switch (datasetName) {
+            case "trackable":
+                dense = new int[]{9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 28, 31, 37, 38, 47, 94, 97, 118, 119, 120, 121, 122, 123, 153, 154, 155, 156, 157, 158, 161, 199, 200,1218, 1219, 1220, 1221, 1222, 1223, 1224, 1225, 1226, 1229};
+                sparse = new int[] {5673, 40, 9858, 235, 7008, 6212, 5986, 3982, 5650, 3751, 182, 8702, 2234, 9019, 622, 5320, 1289, 590, 3746, 2479, 5118, 3075, 747, 2002, 1867, 2831, 9165, 5551, 8249, 8839, 1397, 1394, 2160, 975, 3550, 8902, 760, 6734, 483, 84, 5484, 6226, 6318, 3142, 4128, 2179, 3422, 9235, 2655, 2803};
+                queryList = dense;
+                totalNumberOfLine = 66380;
+                topkList =  new int[] {10};//
+                break;
+            case "identifiable":
+//                sparse = new int[]{ 8903, 9287, 8668, 1750, 2606, 8663, 8927, 5387, 4517, 1115, 975, 1809, 6763, 5126, 2515, 2325, 8114, 2902, 9448, 1893, 6942, 239, 7981, 4431, 3153, 531, 1862, 815, 7478, 9141, 4214, 436, 5194, 3388, 6976, 7118, 6114, 6555, 1758, 7819, 4988, 4931, 9516, 4126, 1760, 6983, 5335, 6824, 1579, 6852};
+                sparse = new int[]{9516, 4126, 1760, 6983, 5335, 6824, 1579, 6852};
+                dense = new int[]{2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,512, 513, 514, 515, 530, 545, 549, 553, 555, 558, 559, 568, 571, 572, 573, 583, 587, 588, 595, 596,6423, 6455, 6510, 6553, 6579, 6605, 6609, 6631, 6679, 6698};
+                queryList = sparse;
+                totalNumberOfLine = 235483;
+                topkList =  new int[] {10};//
+                break;
+            case "public":
+                dense = new int[]{ 4, 6, 7, 13, 19, 20, 35, 36, 45, 46, 50, 51, 52, 60, 61, 62, 63, 65, 66, 67, 68, 69, 72, 73, 75, 76, 77, 82, 120, 122,502, 503, 504, 507, 512, 513, 514, 517, 518, 520, 521, 526, 527, 528, 529, 531, 532, 533, 534, 535};
+                sparse = new int[]{8521, 2151, 9928, 2058, 3827, 9751, 8716, 5038, 9036, 6605, 826, 8556, 4802, 2212, 4833, 789, 3328, 343, 9917, 9205, 6829, 1976, 3154, 3737, 5553, 1691, 2213, 5847, 7897, 7905, 8040, 617, 7437, 5855, 5890, 9421, 5553, 888, 7308, 3487, 4003, 5384, 955, 3722, 9077, 6972, 6856, 9308, 1214, 7804};
+                queryList = sparse;
+                totalNumberOfLine =  546193;
+                topkList =  new int[] {10};//
+                break;
+            case "Argov":
+                dense = new int[]{128, 142, 318, 338, 346, 580, 591, 614, 633, 676, 731, 833, 857, 954, 1113, 1114, 1135, 1136, 1148, 1159, 1185, 1312, 1369, 1404, 1415, 1586, 1701, 1771, 1809, 1815, 1866, 1903, 2032, 2037, 2088, 2122, 2229, 2380, 2569, 2615, 2634, 2798, 2842, 2858, 3038, 3128, 3193, 3273, 3311, 3343};
+                sparse = new int[]{105,10,866,206,594,395,549,305,394,493,475,71,439,719,777,168,103,982,649,540, 7247, 8088, 4039, 9489, 7933, 1707, 2455, 3276, 3417, 8043, 6371, 8405, 5169, 5745, 8572, 5338, 9948, 2056, 200, 3249, 8332, 8644, 3063, 2435, 5603, 1485, 2131, 8548, 4194, 4999};
+                queryList = dense;
+                totalNumberOfLine = 205942;
+                topkList =  new int[] {10};//
+                resolution = 7;
+                break;
+        }
+        total_query_count = queryList.length;
         ArrayList<Integer> arrayList = new ArrayList<>();
         for (int i = 0; i<queryList.length; i++){
             arrayList.add(queryList[i]);
         }
+        zcurveFilePath = "data\\"+datasetName+"\\"+datasetName+"-"+resolution+".ser";
+        dataSetMap = deSerializationZcurve(zcurveFilePath);
+        histogramList = generateHistogram();
 
-        int [] leaf_Threshold_List = new int[]{10,50,100,200,300,500};
-        for (int j = 0; j<leaf_Threshold_List.length; j++){
-            leaf_Threshold = leaf_Threshold_List[j];
-            System.out.println("leaf_Threshold = "+leaf_Threshold);
-            //1,ICT  2,tighter_ICT  3,centroid_WMD  4,removeOneConstraintEMD 5,OurAlgorithms
-            oneLevelIndex(arrayList,"IM_SIG_star");
-            oneLevelIndex(arrayList, "ICT");
-            oneLevelIndex(arrayList, "tighter_ICT");
-            twoLevelIndex(arrayList,"OurAlgorithms");
-            //            oneLevelIndex(arrayList, "centroid_WMD");
+        for (int j = 0; j<topkList.length; j++) {
+            resultHashMapList.clear();
+            topk = topkList[j];
+//            oneLevelIndex(arrayList, "ICT");
+//            oneLevelIndex(arrayList, "tighter_ICT");
+//            twoLevelIndex(arrayList,"OurAlgorithms");
+//            oneLevelIndex(arrayList,"IM_SIG_star");
+            dataSkewCorrectRatio(datasetName,2,arrayList, "tighter_ICT");
+            dataSkewCorrectRatio(datasetName,1,arrayList, "tighter_ICT");
+            dataSkewCorrectRatio(datasetName,1, arrayList, "ICT");
+            dataSkewCorrectRatio(datasetName,1,arrayList,"IM_SIG_star");
         }
 
     }
-
 
     public static void main(String[] args)  throws IOException, CloneNotSupportedException, FileNotFoundException {
         switch (Debug_Level){
             case "setResolution": setResolution();break;
             case "setTopK": setTopK();break;
             case "setScale": setScale();break;
-            case "setLeafnode": setLeafnode();break;
+            case "dataSkew": dataSkew();break;
             default: break;
         }
     }
@@ -230,6 +313,7 @@ public class Main {
         long[] time = new long[query.size()];
         for (int i = 0; i<query.size(); i++){
             queryDataRowNumber = query.get(i);
+            System.out.print( "queryDataset  =  " +query.get(i)+" ; ");
             long startTime = System.currentTimeMillis();
             ArrayList<Integer> datasetID = getAllData();
             long endTime1 = System.currentTimeMillis(); //
@@ -271,7 +355,6 @@ public class Main {
             long FilterTime = System.currentTimeMillis();
             ArrayList topK_ResultID = getExactEMD_ICT(ICTresult, topk);
             long VerifineTime = System.currentTimeMillis();
-
 
             long endTime2 = System.currentTimeMillis(); //
             System.out.print("FilterTime = "+(FilterTime-startTime)+";  ");
@@ -342,21 +425,18 @@ public class Main {
                 }
             }
 
-//            int count = 0;
-//            while (!approxResult.isEmpty()&& count<topk){
-//                //reverse.add(PQ_Relax.poll());
+            int count = 0;
+//            while (!approxResult.isEmpty()&& count<topk) {
 //                relaxIndexNode r= approxResult.poll();
-//                System.out.println(r.resultId+", "+r.getLb());
-//                count++;
+//                System.out.println(r.resultId+": "+datasetIDList.get(histogram_name[r.resultId])+".csv  ,  "+r.getLb());// +";  n = " +r.getUb()
 //            }
 
-//            System.out.print("filterCount =" + filterCount+"; ");
-//            System.out.print("refineCount = "+ refineCount+"; ");
-
-            long endTime3 = System.currentTimeMillis(); //
+                long endTime3 = System.currentTimeMillis(); //
             System.out.println("total_time = "+(endTime3 - endTime1)+"; ");
             time[i] = (endTime3 - endTime1);
         }
+
+
         long totalTime=0;
         for (int i = 0; i<time.length; i++){
             totalTime = totalTime+time[i];
@@ -404,12 +484,13 @@ public class Main {
                     }
                 }
             }
+
             //show result
 //            int count = 0;
 //            while (!resultApprox.isEmpty()&& count<topk){
 //                //reverse.add(PQ_Relax.poll());
 //                relaxIndexNode r= resultApprox.poll();
-//                System.out.println(r.resultId+", "+r.getLb());
+//                System.out.println(r.resultId+": "+datasetIDList.get(histogram_name[r.resultId-1])+".csv  ,  "+r.getLb()+";  ");
 //                count++;
 //            }
 
@@ -438,6 +519,8 @@ public class Main {
             for (int id: dataSetMap.keySet()){
                 HashMap<Long, Double> map1 = dataSetMap.get(id);
                 histogram.add(map1);
+                int name = id;
+                datasetIDList.add(name);
             }
         }else if(decreaseOfResulution > 0){
             for (int id: dataSetMap.keySet()){
@@ -445,7 +528,7 @@ public class Main {
                 long []Coordinates;
                 HashMap<Long, Double> hm = new HashMap<Long, Double>();
                 for (long key: map1.keySet()){
-                    Coordinates = readZcurve.resolve(key);//将zcode坐标分解为二维坐标
+                    Coordinates = readZcurve.resolve(key);
                     double weight = map1.get(key);
                     long[] transferCoordinates = new long[2];
                     long t =(long)Math.pow(2,decreaseOfResulution);
@@ -460,6 +543,8 @@ public class Main {
                     }
                 }
                 histogram.add(hm);
+                int name = id;
+                datasetIDList.add(name);
             }
         }else {
             System.out.println("decreaseOfResulution < 0");
@@ -510,12 +595,8 @@ public class Main {
         //sampleData
         ArrayList<double[]> l = new ArrayList<>();
         DoubleArrayList ub = new DoubleArrayList();
-        long startTime = System.currentTimeMillis();
         ArrayList<String[]> datasetList_after_pooling = getPooling();
-        long endTime = System.currentTimeMillis();
-//        System.out.println("getPoolingTime = "+(endTime - startTime));
         ArrayList<Integer> his = new ArrayList(); //his coresponding to the all histogram_name
-
         ArrayList<Integer> datasetID = new ArrayList<>();
         int numberOfLine = 0;
         while (numberOfLine< totalNumberOfLine && numberOfLine<histogramList.size()){
@@ -531,7 +612,8 @@ public class Main {
             }
             //sampleData
             String[] buf = datasetList_after_pooling.get(numberOfLine);
-
+            allHistogram.put(numberOfLine, allPoints);
+            datasetID.add(numberOfLine);
             if (numberOfLine == queryDataRowNumber){
                 //sampleData
                 query = new double[dimension];
@@ -547,28 +629,19 @@ public class Main {
                     weights[i] = allPoints.get(i)[2];
                 }
                 querySignature = new signature_t(n, features, weights);
-                numberOfLine++;
-            }else {
-                if (numberOfLine < queryDataRowNumber) {
-                    allHistogram.put(numberOfLine, allPoints);
-                    datasetID.add(numberOfLine);
-                } else {
-                    allHistogram.put(numberOfLine - 1, allPoints);
-                    datasetID.add(numberOfLine - 1);
-                }
-                //sampleData
-                double[] corrd = new double[dimension];
-                corrd[0] = Double.parseDouble(buf[1]);
-                corrd[1] = Double.parseDouble(buf[2]);
-                l.add(corrd);
-                his.add(Integer.parseInt(buf[0]));
-                ub.add(Double.parseDouble(buf[3]));
-
-                numberOfLine++;
             }
+            //sampleData
+            double[] corrd = new double[dimension];
+            corrd[0] = Double.parseDouble(buf[1]);
+            corrd[1] = Double.parseDouble(buf[2]);
+            l.add(corrd);
+            his.add(Integer.parseInt(buf[0]));
+            ub.add(Double.parseDouble(buf[3]));
+            numberOfLine++;
+
         }
         //sampleData
-        int countOfRow = numberOfLine - 1;// the -1 is subtract the query data;
+        int countOfRow = numberOfLine;
         iterMatrix = new double[countOfRow][dimension];
         ubMove = new double[countOfRow];
         histogram_name = new int[countOfRow];
@@ -579,44 +652,6 @@ public class Main {
             histogram_name[i] = his.get(i);
         }
         return datasetID;
-    }
-
-    public static void sampleData() throws IOException,CloneNotSupportedException { //用于构造ball tree
-        ArrayList<double[]> l = new ArrayList<>();
-        DoubleArrayList ub = new DoubleArrayList();
-        ArrayList<String[]> datasetList_after_pooling = getPooling();
-        ArrayList<Integer> his = new ArrayList(); //his coresponding to the all histogram_name
-
-        int numberOfLine = 0;
-        while (numberOfLine< totalNumberOfLine && numberOfLine<datasetList_after_pooling.size()){
-            String[] buf = datasetList_after_pooling.get(numberOfLine);
-            if (numberOfLine == queryDataRowNumber){
-                query = new double[dimension];
-                query[0] = Double.parseDouble(buf[1]);
-                query[1] = Double.parseDouble(buf[2]);
-                queryRadius = Double.parseDouble(buf[3]);
-                numberOfLine++;
-            }else {
-                double[] corrd = new double[dimension];
-                corrd[0] = Double.parseDouble(buf[1]);
-                corrd[1] = Double.parseDouble(buf[2]);
-                l.add(corrd);
-                his.add(Integer.parseInt(buf[0]));
-                ub.add(Double.parseDouble(buf[3]));
-                numberOfLine++;
-            }
-        }
-        int countOfRow = numberOfLine - 1;// the -1 is subtract the query data;
-        iterMatrix = new double[countOfRow][dimension];
-        ubMove = new double[countOfRow];
-        histogram_name = new int[countOfRow];
-        ubMove = ub.toDoubleArray();
-        for (int i = 0; i < countOfRow; i++) {
-            iterMatrix[i][0] = l.get(i)[0];
-            iterMatrix[i][1] = l.get(i)[1];
-            histogram_name[i] = his.get(i);
-        }
-        //       System.out.println("l.size()===="+l.size());
     }
 
     public static indexNode createBallTree() throws IOException,CloneNotSupportedException {
@@ -630,18 +665,13 @@ public class Main {
        return in;
     }
 
-    public static double distance2(double[] x, double[] y) {
+    public static double distance(double[] x, double[] y) {
         double d = 0.0;
         for (int i = 0; i < x.length; i++) {
             d += (x[i] - y[i]) * (x[i] - y[i]);
         }
-        return d;
+        return Math.sqrt(d);
     }
-
-    public static double distance(double[] x, double[] y) {
-        return Math.sqrt(distance2(x, y));
-    }
-
 
     public static PriorityQueue<indexNodeExpand> PQ_Branch = new PriorityQueue<>(new ComparatorByIndexNodeExpand());
     public static double LB_Branch = 1000000000;
@@ -815,39 +845,33 @@ public class Main {
                 }
             }
         }
-//        System.out.println("refineCount = " + refineCount+";");
 
-//        long endTime2 = System.currentTimeMillis(); //
-//        System.out.println("Exact EMD time==== " + (endTime2 - startTime) + "ms");
         ArrayList<Double> topK_EMD = new ArrayList<>();
         ArrayList<String> resultString = new ArrayList<>();
         ArrayList<Integer> topK_ResultID = new ArrayList<>();
         while (!result.isEmpty()){
             relaxIndexNode r = result.poll();
-            String s = "getSignatureID: "+r.resultId + ", Value: " + r.lb;
+            String s = "r.resultId: "+r.resultId +",  "+datasetIDList.get(histogram_name[r.resultId])+".csv" + ", Value: " + r.lb+ ", lb: " + r.ub;
             resultString.add(s);
             topK_ResultID.add(r.resultId);
             topK_EMD.add(r.lb);
         }
 
-//        for (int j = 0; j<topK_ResultID.size(); j++){
-//            System.out.println(j+" , "+topK_ResultID.get(j)+" , "+topK_EMD.get(j));
-//        }
+//        for (int j = 0; j<resultString.size(); j++){
+//            System.out.println(j+" , "+resultString.get(j));
+//        }  // detail
+
         return topK_ResultID; //reverse
     }
 
     public static ArrayList getExactEMD(PriorityQueue<relaxIndexNode> secondFilterResult, int topk) throws CloneNotSupportedException{
-        //Due to aIntegers.add(id+1) in traverseConvert2, Thus the rowNumber+1 is stored in resultID
-        long startTime = System.currentTimeMillis();
         int refineCount = 0;
         emd_class hh = new emd_class();
         PriorityQueue<relaxIndexNode> result = new PriorityQueue<>(new ComparatorByRelaxIndexNode());
         ArrayList<Integer> resultID = new ArrayList<Integer>();
-
         while (!secondFilterResult.isEmpty()){
             relaxIndexNode re = secondFilterResult.poll();
             resultID.add(re.resultId);
-
             if (result.size()<topk){
                 signature_t data = getSignature(re.resultId-1);
                 double emd = hh.emd(data, querySignature, null);
@@ -875,22 +899,17 @@ public class Main {
             }
         }
 
-//        System.out.println("refineCount = " + refineCount+";");
         ArrayList<String> resultString = new ArrayList<>();
         ArrayList<Integer> topK_ResultID = new ArrayList<>();
         ArrayList<Double> topK_EMD = new ArrayList<>();
         while (!result.isEmpty()){
             relaxIndexNode r = result.poll();
-//            String s = "getSignatureID: "+r.resultId+",  Key: " + histogram_name[r.resultId-1] + ", Value: " + r.lb;
-            String s = "getSignatureID: "+r.resultId + ", Value: " + r.lb;
+            String s = "r.resultId: "+r.resultId+",  "+datasetIDList.get(histogram_name[r.resultId-1])+".csv" + ",  Value: " + r.lb+ ", lb: " + r.ub;
+            System.out.println(r.resultId+", "+datasetIDList.get(histogram_name[r.resultId-1])+".csv  ,  "+r.getLb()+"; ");
             resultString.add(s);
             topK_ResultID.add(r.resultId);
             topK_EMD.add(r.lb);
-
         }
-//        for (int j = 0; j<topK_ResultID.size(); j++){
-//            System.out.println(j+" , "+topK_ResultID.get(j)+" , "+topK_EMD.get(j));
-//        }
 
         return topK_ResultID; //reverse
     }

@@ -14,12 +14,11 @@ import java.util.Map;
 public class readZcurve {
     public static double range = 360;
     public static int resolution; //unit=range/(2^resolution)
-    public static String zcurveFilePath;//"D:\\GitHub\\ZorderCurve\\src\\data\\gpx.ser";//存储zcurve文件的文件路径 D:\GitHub\ZorderCurve\src\data\gpx-trackable-hashmap.ser
+    public static String zcurveFilePath;//"D:\\GitHub\\ZorderCurve\\src\\data\\gpx.ser";
     public static String histogramPath;
 
     public static HashMap<Integer,HashMap<Long,Double>> dataSetMap;
     public static void main(String[]args) throws FileNotFoundException{
-
         resolution =12; //Integer.parseInt(System.getProperty("resolution"));//
         zcurveFilePath = "D:\\GitHub\\ZorderCurve\\data\\public\\public-12.ser";//System.getProperty("zcurveFilePath");
         dataSetMap = deSerializationZcurve(zcurveFilePath);
@@ -34,7 +33,6 @@ public class readZcurve {
             histogram.add(map1);
         }
         ps.close();
-
     }
 
     public static signature_t getSignature(HashMap<Long,Double> map){
@@ -56,22 +54,24 @@ public class readZcurve {
 
     public static long[] resolve(long code){
         long[] Coordinates = new long[2];
-        //int length = (int)Math.pow(2,resolution);
-
-        StringBuilder a = new StringBuilder();
-        StringBuilder b = new StringBuilder();
-
         String str = Long.toBinaryString(code);
-        int length = str.length();
 
-        for(int i=0;i<length;i++){
-            if(i%2==0)
-                a.append(str.charAt(i));
-            else
-                b.append(str.charAt(i));
+        while (str.length()<2*resolution){
+            str = "0"+str;
         }
-        Coordinates[0] = Long.parseLong(a.toString(),2);
-        Coordinates[1] = Long.parseLong(b.toString(),2);
+
+        StringBuilder c = new StringBuilder();
+        StringBuilder d = new StringBuilder();
+
+        for(int i=0;i<str.length();i++){
+            if(i%2==0)
+                c.append(str.charAt(i));
+            else
+                d.append(str.charAt(i));
+        }
+
+        Coordinates[0] = Long.parseLong(c.toString(),2);
+        Coordinates[1] = Long.parseLong(d.toString(),2);
         return Coordinates;
     }
 

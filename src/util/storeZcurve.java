@@ -21,7 +21,7 @@ public class storeZcurve {
 
     public static void main(String[]args){
         //public 546194; trackable 66380; identifiable 235482;
-        int [] resolutionList = new int[]{17};//16, 15,14,13,12,11
+        int [] resolutionList = new int[]{11};//15,14,13,12,11
         for (int i = 0; i<resolutionList.length; i++){
             resolution = resolutionList[i];
             dataPath =  "/home/gr/wzyang/gpx-planet/public/"; //System.getProperty("dataPath");
@@ -35,18 +35,7 @@ public class storeZcurve {
 
         }
 
-//        resolution = Integer.parseInt(System.getProperty("resolution"));
-//        dataPath =  "/home/wzyang/gpx-planet/public/";//"D:\\gpx-planet\\"; //System.getProperty("dataPath");
-//        maxFileName =Integer.parseInt(System.getProperty("maxFileName"));
-//        zcurveFilePath ="/home/wzyang/java/gpx/gpx-"+"Test.ser";// "D:\\IdeaProjects\\ZorderCurve\\src\\data\\gpx-"+ "trackable-"+"Test.ser";//System.getProperty("zcurveFilePath");
-//
-//        long startTime = System.currentTimeMillis();
-//        HashMap<Integer, HashMap<Long,Double>> testMap = storeZcurve2(minX,minY,range,2,resolution,zcurveFilePath);
-//        long endTime = System.currentTimeMillis();
-//        System.out.println("resolution = " + resolution +" , " + (endTime - startTime)+"ms" );
-
     }
-
     /*
      * combine two integers to produce a new value
      */

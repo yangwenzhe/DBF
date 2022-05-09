@@ -92,6 +92,55 @@ public class pooling {
         s3 = deleteZeroBin(s2);
         return s3;
     }
+
+    public signature_t pooling3DOperature (signature_t s1, int t) throws CloneNotSupportedException{
+        Object obj = s1.clone();
+//        System.out.println("s1.n = "+s1.n);
+        ub_move = 0.0;
+        signature_t s2 = (signature_t) obj;
+//        for (int i = 0; i<s2.n; i++){
+//            System.out.println(s2.Features[i].X+","+ s2.Features[i].Y+","+s2.Features[i].Z+","+ s2.Weights[i]);
+//        }
+
+        double totalWeights = 0.0;
+        for (int i = 0; i<s2.n; i++){
+            totalWeights += s2.Weights[i];
+        }
+
+//        System.out.println("totalWeights = "+totalWeights);
+        signature_t s3 = new signature_t();
+        int minIndex = 100000000;
+        int secIndex = 100000000;
+        while(numberOfNoneZero(s2) > t){
+            //   System.out.println("numberOfNoneZero(s2) = "+numberOfNoneZero(s2));
+            double min = 100000000;//????bin???
+            double sec = 100000000;//?????bin???
+            //??????bin
+            for (int i =0; i<s2.n; i++){
+                if (min > s2.Weights[i] && s2.Weights[i] > 0){
+                    min = s2.Weights[i];
+                    minIndex = i;
+                }
+            }
+            //??second minimize?bin
+            for (int j =0; j<s2.n; j++){
+                if (sec > s2.Weights[j] && s2.Weights[j] > 0 && j!= minIndex){
+                    sec = s2.Weights[j];
+                    secIndex = j;
+                }
+            }
+//            System.out.println("minIndex = "+minIndex +" ;  secIndex = "+secIndex);
+            double distance = disBetween3DPoint(s2.Features[minIndex],s2.Features[secIndex]);
+            ub_move += distance * min;
+            s2.Weights[secIndex] = s2.Weights[secIndex] + s2.Weights[minIndex];
+            s2.Weights[minIndex] = 0;
+        }
+        ub_move = ub_move/totalWeights;
+        s3 = deleteZeroBin(s2);
+        return s3;
+    }
+
+
     public static signature_t deleteZeroBin(signature_t s1){
         signature_t s2;
         ArrayList<Double> weights = new ArrayList<>();
@@ -115,6 +164,14 @@ public class pooling {
         double dX = F1.X - F2.X;
         double dY = F1.Y - F2.Y;
         return Math.sqrt((double)(dX*dX + dY*dY));
+    }
+    public static double disBetween3DPoint(feature_t F1, feature_t F2){
+
+        double dX = F1.X - F2.X;
+        double dY = F1.Y - F2.Y;
+        double dZ = F1.Z - F2.Z;
+//        System.out.println(dX + ", "+dY + ", "+dX);
+        return Math.sqrt((double)(dX*dX + dY*dY +dZ*dZ));
     }
 
     public static double EuclideanDistance(double[] F1, double[] F2){
