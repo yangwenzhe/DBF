@@ -2,27 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6c5a7957-04da-4729-885e-30784bae5591" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/ballTree/experiment/Argov3D.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ballTree/experiment/cross_respo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ballTree/experiment/Argov3D.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ballTree/experiment/Argov3D.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ballTree/experiment/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ballTree/experiment/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ballTree/experiment/experimentSet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ballTree/experiment/randomGeneQuery.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entity/feature_t.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/entity/feature_t.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/util/pooling.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/pooling.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/util/readZcurve.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/readZcurve.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/util/storeZcurve.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/util/storeZcurve.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/DBF-1.0-SNAPSHOT-shaded.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/DBF-1.0-SNAPSHOT-shaded.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/DBF-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/DBF-1.0-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ballTree/experiment/Argov3D.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ballTree/experiment/Argov3D.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/ballTree/experiment/ComparatorByIndexNodeExpand.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ballTree/experiment/ComparatorByIndexNodeExpand.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/ballTree/experiment/ComparatorByRelaxIndexNode.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ballTree/experiment/ComparatorByRelaxIndexNode.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/ballTree/experiment/ComparatorByRelaxIndexNodeReverse.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ballTree/experiment/ComparatorByRelaxIndexNodeReverse.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/ballTree/experiment/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ballTree/experiment/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ballTree/experiment/experimentSet.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/entity/feature_t.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/entity/feature_t.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/util/pooling.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/util/pooling.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/util/readZcurve.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/util/readZcurve.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/util/storeZcurve.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/util/storeZcurve.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/original-DBF-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/original-DBF-1.0-SNAPSHOT.jar" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -41,14 +31,14 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ballTree/experiment/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="568">
-              <caret line="108" column="88" selection-start-line="108" selection-start-column="88" selection-end-line="108" selection-end-column="88" />
+            <state relative-caret-position="512">
+              <caret line="908" selection-start-line="908" selection-end-line="908" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#2046#4142#0" />
-                <element signature="e#6212#8684#0" />
-                <element signature="e#8745#11308#0" />
-                <element signature="e#11314#17833#0" />
+                <element signature="e#2070#4166#0" />
+                <element signature="e#6340#8812#0" />
+                <element signature="e#8817#11374#0" />
+                <element signature="e#11379#16170#0" />
               </folding>
             </state>
           </provider>
@@ -59,7 +49,7 @@
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
               <first_editor relative-caret-position="570">
-                <caret line="19" column="67" lean-forward="true" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="67" />
+                <caret line="19" column="67" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="67" />
               </first_editor>
               <second_editor />
             </state>
@@ -78,9 +68,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>结果展示</find>
-      <find>sampleDa</find>
-      <find>distance2</find>
       <find>getAllDa</find>
       <find>oneLevelIndex</find>
       <find>getExactEMD_ICT</find>
@@ -98,7 +85,6 @@
       <find>getExac</find>
       <find>twoLevelIndex</find>
       <find>queryS</find>
-      <find>getExactEMD</find>
       <find>getBranchAndBoundResultID</find>
       <find>getExact</find>
       <find>getRelaxEMD</find>
@@ -108,6 +94,10 @@
       <find>getAll</find>
       <find>histogramList</find>
       <find>generateHistogram</find>
+      <find>getallDat</find>
+      <find>== queryDataRowNumber</find>
+      <find>getAllData(</find>
+      <find>getExactEMD</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -156,8 +146,8 @@
         <option value="$PROJECT_DIR$/src/util/storeZcurve.java" />
         <option value="$PROJECT_DIR$/src/util/readZcurve.java" />
         <option value="$PROJECT_DIR$/src/ballTree/experiment/dataSkew.java" />
-        <option value="$PROJECT_DIR$/src/ballTree/experiment/Argov3D.java" />
         <option value="$PROJECT_DIR$/src/ballTree/experiment/cross_respo.java" />
+        <option value="$PROJECT_DIR$/src/ballTree/experiment/Argov3D.java" />
         <option value="$PROJECT_DIR$/src/ballTree/experiment/Main.java" />
       </list>
     </option>
@@ -188,9 +178,9 @@
   <component name="MavenRunner">
     <option name="vmOptions" value="-Dfile.encoding=GBK" />
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-521" />
-    <option name="y" value="-1088" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="1396" />
+    <option name="y" value="-1069" />
     <option name="width" value="1936" />
     <option name="height" value="1056" />
   </component>
@@ -200,6 +190,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -253,7 +244,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -397,17 +387,18 @@
       <workItem from="1647173500576" duration="1000" />
       <workItem from="1647692056273" duration="665000" />
       <workItem from="1652082284826" duration="12014000" />
+      <workItem from="1652102390337" duration="761000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="360015000" />
+    <option name="totallyTimeSpent" value="360776000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-521" y="-1088" width="1936" height="1056" extended-state="6" />
+    <frame x="1396" y="-1069" width="1936" height="1056" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.08528785" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18976545" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -416,7 +407,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3281471" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.5412402" weight="0.05856833" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.5412402" weight="0.12255965" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -430,7 +421,7 @@
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info active="true" anchor="right" id="Maven" order="3" visible="true" weight="0.015991472" />
+      <window_info active="true" anchor="right" id="Maven" order="3" visible="true" weight="0.16471216" />
       <window_info anchor="right" id="Palette" order="4" />
       <window_info anchor="right" id="Capture Analysis" order="5" />
       <window_info anchor="right" id="SciView" order="6" />
@@ -609,19 +600,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ballTree/experiment/dataSkew.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="42" column="4" selection-start-line="42" selection-start-column="4" selection-end-line="42" selection-end-column="40" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2443#6828#0" />
-            <element signature="e#12912#15475#0" />
-            <element signature="e#15481#24062#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ballTree/experiment/dataSkew.java" />
     <entry file="file://$PROJECT_DIR$/src/util/readZcurve.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="705">
@@ -629,52 +608,46 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ballTree/experiment/cross_respo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21269">
-          <caret line="792" column="57" selection-start-line="792" selection-start-column="57" selection-end-line="792" selection-end-column="57" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#4203#6006#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ballTree/experiment/Argov3D.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="300" column="18" selection-start-line="300" selection-start-column="18" selection-end-line="300" selection-end-column="18" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#47370#48041#0" />
-            <element signature="e#48047#48620#0" />
-            <element signature="e#48626#49601#0" />
-            <element signature="e#49607#50240#0" />
-            <element signature="e#50245#50439#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
           <first_editor relative-caret-position="570">
-            <caret line="19" column="67" lean-forward="true" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="67" />
+            <caret line="19" column="67" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="67" />
           </first_editor>
           <second_editor />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ballTree/experiment/Main.java">
+    <entry file="file://$PROJECT_DIR$/src/ballTree/experiment/Argov3D.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="568">
-          <caret line="108" column="88" selection-start-line="108" selection-start-column="88" selection-end-line="108" selection-end-column="88" />
+        <state relative-caret-position="280">
+          <caret line="421" column="54" selection-start-line="421" selection-start-column="33" selection-end-line="421" selection-end-column="54" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2046#4142#0" />
-            <element signature="e#6212#8684#0" />
-            <element signature="e#8745#11308#0" />
-            <element signature="e#11314#17833#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ballTree/experiment/cross_respo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret line="37" selection-start-line="37" selection-end-line="37" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ballTree/experiment/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="512">
+          <caret line="908" selection-start-line="908" selection-end-line="908" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2070#4166#0" />
+            <element signature="e#6340#8812#0" />
+            <element signature="e#8817#11374#0" />
+            <element signature="e#11379#16170#0" />
           </folding>
         </state>
       </provider>

@@ -106,7 +106,7 @@ public class Main {
                 totalNumberOfLine = 235483;
             break;
         }
-        zcurveFilePath ="data\\"+datasetName+"\\"+datasetName+"-"+resolution+".ser";//  "/home/gr/wzyang/java/Argov/Argov"+"-"+resolution+".ser";  //
+        zcurveFilePath ="/home/gr/wzyang/java/Argov/Argov"+"-"+resolution+".ser";  // "data\\"+datasetName+"\\"+datasetName+"-"+resolution+".ser";//
         dataSetMap = deSerializationZcurve(zcurveFilePath);
         histogramList = generateHistogram();
         System.out.println("datasetName ="+datasetName);
@@ -117,9 +117,9 @@ public class Main {
         }
         for (int j = 0; j<topkList.length; j++){
             topk = topkList[j];
-            oneLevelIndex(arrayList,"IM_SIG_star");
-            oneLevelIndex(arrayList, "ICT");
-            oneLevelIndex(arrayList, "tighter_ICT");
+//            oneLevelIndex(arrayList,"IM_SIG_star");
+//            oneLevelIndex(arrayList, "ICT");
+//            oneLevelIndex(arrayList, "tighter_ICT");
             twoLevelIndex(arrayList,"OurAlgorithms");
 //            oneLevelIndex(arrayList, "removeOneConstraintEMD");
         }
@@ -614,7 +614,7 @@ public class Main {
             String[] buf = datasetList_after_pooling.get(numberOfLine);
             allHistogram.put(numberOfLine, allPoints);
             datasetID.add(numberOfLine);
-            if (numberOfLine == queryDataRowNumber){
+            if (numberOfLine +1 == queryDataRowNumber){
                 //sampleData
                 query = new double[dimension];
                 query[0] = Double.parseDouble(buf[1]);
@@ -905,7 +905,7 @@ public class Main {
         while (!result.isEmpty()){
             relaxIndexNode r = result.poll();
             String s = "r.resultId: "+r.resultId+",  "+datasetIDList.get(histogram_name[r.resultId-1])+".csv" + ",  Value: " + r.lb+ ", lb: " + r.ub;
-            System.out.println(r.resultId+", "+datasetIDList.get(histogram_name[r.resultId-1])+".csv  ,  "+r.getLb()+"; ");
+//            System.out.println(r.resultId+", "+datasetIDList.get(histogram_name[r.resultId-1])+".csv  ,  "+r.getLb()+"; ");
             resultString.add(s);
             topK_ResultID.add(r.resultId);
             topK_EMD.add(r.lb);

@@ -419,7 +419,7 @@ public class Argov3D {
             //sampleData
             String[] buf = datasetList_after_pooling.get(numberOfLine);
 
-            if (numberOfLine == queryDataRowNumber){
+            if (numberOfLine + 1 == queryDataRowNumber){
                 //sampleData
                 query = new double[dimension];
                 query[0] = Double.parseDouble(buf[1]);
