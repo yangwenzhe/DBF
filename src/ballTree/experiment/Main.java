@@ -46,30 +46,31 @@ public class Main {
     public static void setResolution() throws IOException,CloneNotSupportedException{
         String[] fourDataSetName = new String[]{"argoverse","trackable","identifiable","public"};//
         String datasetName = fourDataSetName[0];
-        int[] resolutionList = new int[]{7};//{10,11,12,13,14};//{5,6,7,8,9};
+        int[] resolutionList = new int[]{7};
         topk = 10;
         for (int i = 0; i<resolutionList.length; i++){
             resolution = resolutionList[i];
             zcurveFilePath = "data\\"+datasetName+"\\"+datasetName+"-"+resolution+".ser";
             dataSetMap = deSerializationZcurve(zcurveFilePath);
             histogramList = generateHistogram();
-            // The generateQuery function randomly generates the query list
-            // ArrayList<Integer> arrayList = generateQuery(1, 10000, totalNumberOfQuery);
-            int[] queryList = new int[totalNumberOfQuery];
+            int[] queryList = new int[]{1};
             switch (datasetName){
-                case "argoverse": queryList = new int[]{595,91,386,888,378,806,300,317,773,203};
+                // The generateQuery function randomly generates the query list
+                // ArrayList<Integer> arrayList = generateQuery(1, 10000, totalNumberOfQuery);
+                case "argoverse":
                     totalNumberOfLine = 205942;
                     break;
-                case "trackable": queryList = new int[]{3815,13583,13583,1316,384,5182,1236,17564,6423,13331};
+                case "trackable":
                     totalNumberOfLine = 66380;
                     break;
-                case "public":queryList = new int[]{9245,5186,15522,3692,10116,6843,14086,7028,3815,13583};
+                case "public":
                     totalNumberOfLine =  546193;
                     break;
-                case "identifiable":queryList = new int[]{8164,9245,5186,15522,3692,10116,6843,14086,7028,3815};
+                case "identifiable":
                     totalNumberOfLine = 235483;
                     break;
             }
+            total_query_count = queryList.length;
             ArrayList<Integer> arrayList = new ArrayList<>();
             for (int t = 0; t<queryList.length; t++){
                 arrayList.add(queryList[t]);
@@ -89,39 +90,42 @@ public class Main {
         int[] topkList = new int[]{5};
         // The generateQuery function randomly generates the query list
         // ArrayList<Integer> arrayList = generateQuery(1, 10000, totalNumberOfQuery);
-        int[] queryList = new int[totalNumberOfQuery];
+        int[] queryList = new int[]{1};
         switch (datasetName){
-            // random select query by randomGeneQuery.java
-            case "argoverse": queryList = new int[]{595,91,386,888,378,806,300,317,773,203};
+            case "argoverse":
                 totalNumberOfLine = 205942;
                 resolution = 7;
                 break;
-            case "trackable": queryList = new int[]{3815,13583,13583,1316,384,5182,1236,17564,6423,13331};
-            totalNumberOfLine = 66380;
-            break;
-            case "public":queryList = new int[]{9245,5186,15522,3692,10116,6843,14086,7028,3815,13583};
+            case "trackable":
+                totalNumberOfLine = 66380;
+                break;
+            case "public":
                 totalNumberOfLine =  546193;
-            break;
-            case "identifiable":queryList = new int[]{8164,9245,5186,15522,3692,10116,6843,14086,7028,3815};
+                break;
+            case "identifiable":
                 totalNumberOfLine = 235483;
             break;
         }
-        zcurveFilePath ="/home/gr/wzyang/java/Argov/Argov"+"-"+resolution+".ser";  // "data\\"+datasetName+"\\"+datasetName+"-"+resolution+".ser";//
+        zcurveFilePath ="data\\"+datasetName+"\\"+datasetName+"-"+resolution+".ser";//"/home/gr/wzyang/java/Argov/Argov"+"-"+resolution+".ser";  //
         dataSetMap = deSerializationZcurve(zcurveFilePath);
         histogramList = generateHistogram();
         System.out.println("datasetName ="+datasetName);
         ArrayList<Integer> arrayList = new ArrayList<>();
-
+        total_query_count = queryList.length;
         for (int i = 0; i<queryList.length; i++){
             arrayList.add(queryList[i]);
         }
         for (int j = 0; j<topkList.length; j++){
             topk = topkList[j];
-//            oneLevelIndex(arrayList,"IM_SIG_star");
-//            oneLevelIndex(arrayList, "ICT");
-//            oneLevelIndex(arrayList, "tighter_ICT");
+            oneLevelIndex(arrayList,"IM_SIG_star");
+            oneLevelIndex(arrayList, "ICT");
+            oneLevelIndex(arrayList, "tighter_ICT");
             twoLevelIndex(arrayList,"OurAlgorithms");
 //            oneLevelIndex(arrayList, "removeOneConstraintEMD");
+//            oneLevelApproaximate(arrayList,"IM_SIG_star");
+//            oneLevelApproaximate(arrayList, "ICT");
+//            oneLevelApproaximate(arrayList, "tighter_ICT");
+//            twoLevelApproaximate(arrayList,"OurAlgorithms");
         }
 
     }
@@ -133,24 +137,24 @@ public class Main {
         int[] totalNumberOfLineList = new int[5];
         // The generateQuery function randomly generates the query list
         // ArrayList<Integer> arrayList = generateQuery(1, 10000, totalNumberOfQuery);
-
-        int[] queryList = new int[10];
+        int[] queryList = new int[]{1};
         switch (datasetName){
-            case "argoverse": queryList = new int[]{595,91,386,888,378,806,300,317,773,203};
-                totalNumberOfLineList = new int[]{40000, 80000, 120000, 160000, 200000};//
+            case "argoverse":
+                totalNumberOfLineList = new int[]{40000, 80000, 120000, 160000, 200000};
                 resolution = 7;
                 break;
-            case "trackable": queryList = new int[]{3815,13583,13583,1316,384,5182,1236,17564,6423,13331};
-                totalNumberOfLineList = new int[]{12000, 24000, 36000, 48000, 60000};//{20000, 30000, 40000, 50000, 60000}
+            case "trackable":
+                totalNumberOfLineList = new int[]{12000, 24000, 36000, 48000, 60000};
                 break;
-            case "public":queryList = new int[]{9245,5186,15522,3692,10116,6843,14086,7028,3815,13583};
-                totalNumberOfLineList = new int[]{100000, 200000, 300000, 400000, 500000};//
+            case "public":
+                totalNumberOfLineList = new int[]{100000, 200000, 300000, 400000, 500000};
                 break;
-            case "identifiable":queryList = new int[]{8164,9245,5186,15522,3692,10116,6843,14086,7028,3815};
-                totalNumberOfLineList = new int[]{50000, 100000, 140000, 180000, 235483};//50000, 100000, 150000, 200000, 235483}
+            case "identifiable":
+                totalNumberOfLineList = new int[]{50000, 100000, 140000, 180000, 235483};
                 totalNumberOfLine = 235483;
                 break;
         }
+        total_query_count = queryList.length;
         ArrayList<Integer> arrayList = new ArrayList<>();
         for (int i = 0; i<queryList.length; i++){
             arrayList.add(queryList[i]);
@@ -251,8 +255,7 @@ public class Main {
                 topkList =  new int[] {10};//
                 break;
             case "identifiable":
-//                sparse = new int[]{ 8903, 9287, 8668, 1750, 2606, 8663, 8927, 5387, 4517, 1115, 975, 1809, 6763, 5126, 2515, 2325, 8114, 2902, 9448, 1893, 6942, 239, 7981, 4431, 3153, 531, 1862, 815, 7478, 9141, 4214, 436, 5194, 3388, 6976, 7118, 6114, 6555, 1758, 7819, 4988, 4931, 9516, 4126, 1760, 6983, 5335, 6824, 1579, 6852};
-                sparse = new int[]{9516, 4126, 1760, 6983, 5335, 6824, 1579, 6852};
+               sparse = new int[]{ 8903, 9287, 8668, 1750, 2606, 8663, 8927, 5387, 4517, 1115, 975, 1809, 6763, 5126, 2515, 2325, 8114, 2902, 9448, 1893, 6942, 239, 7981, 4431, 3153, 531, 1862, 815, 7478, 9141, 4214, 436, 5194, 3388, 6976, 7118, 6114, 6555, 1758, 7819, 4988, 4931, 9516, 4126, 1760, 6983, 5335, 6824, 1579, 6852};
                 dense = new int[]{2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,512, 513, 514, 515, 530, 545, 549, 553, 555, 558, 559, 568, 571, 572, 573, 583, 587, 588, 595, 596,6423, 6455, 6510, 6553, 6579, 6605, 6609, 6631, 6679, 6698};
                 queryList = sparse;
                 totalNumberOfLine = 235483;
@@ -329,7 +332,7 @@ public class Main {
             System.out.print("create_tree = "+(endTime2 - endTime1)+"; ");
             System.out.print("FilterTime = "+(SecondFilterTime-endTime2)+"; ");
             System.out.print("VerifineTime = " +(VerifineTime-SecondFilterTime)+"; ");
-            System.out.println("total_time = "+(endTime3 - endTime1));
+            System.out.println("total_time = "+(endTime3 - endTime1)+"ms ;");
             time[i] = (endTime3 - endTime1);
         }
 
@@ -337,8 +340,8 @@ public class Main {
         for (int i = 0; i<time.length; i++){
             totalTime = totalTime+time[i];
         }
-        double averageTime = totalTime/10;
-        System.out.println("average_time =  "+averageTime);
+        double averageTime = totalTime/total_query_count;
+        System.out.println("average_time =  "+averageTime+"ms");
 
     }
 
@@ -359,15 +362,15 @@ public class Main {
             long endTime2 = System.currentTimeMillis(); //
             System.out.print("FilterTime = "+(FilterTime-startTime)+";  ");
             System.out.print("VerifineTime = "+(VerifineTime-FilterTime)+";  ");
-            System.out.println("totalTime = "+(endTime2 - startTime));
+            System.out.println("totalTime = "+(endTime2 - startTime)+"ms");
             time[i] = (endTime2 - startTime);
         }
         long totalTime=0;
         for (int i = 0; i<time.length; i++){
             totalTime = totalTime+time[i];
         }
-        double averageTime = totalTime/10;
-        System.out.println("average_time =  "+averageTime);
+        double averageTime = totalTime/total_query_count;
+        System.out.println("average_time =  "+averageTime+"ms");
     }
 
     public static void oneLevelApproaximate(ArrayList<Integer> query, String DEBUG_LEVEL) throws IOException, CloneNotSupportedException{
@@ -432,7 +435,7 @@ public class Main {
 //            }
 
                 long endTime3 = System.currentTimeMillis(); //
-            System.out.println("total_time = "+(endTime3 - endTime1)+"; ");
+            System.out.println("total_time = "+(endTime3 - endTime1)+"ms ;");
             time[i] = (endTime3 - endTime1);
         }
 
@@ -441,8 +444,8 @@ public class Main {
         for (int i = 0; i<time.length; i++){
             totalTime = totalTime+time[i];
         }
-        double averageTime = totalTime/10;
-        System.out.println("average_time =  "+averageTime);
+        double averageTime = totalTime/total_query_count;
+        System.out.println("average_time =  "+averageTime+"ms");
 //        return resultApprox;
     }
     public static void twoLevelApproaximate(ArrayList<Integer> query, String DEBUG_LEVEL) throws IOException, CloneNotSupportedException{
@@ -500,7 +503,7 @@ public class Main {
 
             long endTime3 = System.currentTimeMillis(); //
             System.out.print("create_tree = "+(endTime2 - endTime1)+"; ");
-            System.out.println("total_time = "+(endTime3 - endTime1)+"; ");
+            System.out.println("total_time = "+(endTime3 - endTime1)+"ms ;");
             time[i] = endTime3 - endTime1;
 
         }
@@ -508,8 +511,8 @@ public class Main {
         for (int i = 0; i<time.length; i++){
             totalTime = totalTime+time[i];
         }
-        double averageTime = totalTime/10;
-        System.out.println("average_time =  "+averageTime);
+        double averageTime = totalTime/total_query_count;
+        System.out.println("average_time =  "+averageTime+"ms");
 
 
     }
@@ -561,16 +564,12 @@ public class Main {
             HashMap<Long, Double> map1 = histogramList.get(id);
             signature_t s1 = getSignature(map1);
             signature_t s1_pooling = p.poolingOperature(s1, 1);
-//            System.out.println("id = "+id+"   map1.n = "+map1.size()+"   s1.n  = "+s1.n+"   s1_pooling.n = "+s1_pooling.n);
             double ub_move = p.getUb();
-
             String[] string = new String[4];
-
             string[0] = String.valueOf(id);
             string[1] = String.valueOf(s1_pooling.Features[0].X);
             string[2] = String.valueOf(s1_pooling.Features[0].Y);
             string[3] = String.valueOf(ub_move);
-
             dataSetList_after_pooling.add(string);
 
         }
@@ -657,7 +656,7 @@ public class Main {
     public static indexNode createBallTree() throws IOException,CloneNotSupportedException {
 //        long startTime = System.currentTimeMillis();
         int leafThreshold = leaf_Threshold;
-        int maxDepth = max_Depth; // 2^22 = 104 8576
+        int maxDepth = max_Depth; //
         long startTime = System.currentTimeMillis();
         long endTime1 = System.currentTimeMillis();
         indexNode in = ball_tree.create(ubMove, iterMatrix, leafThreshold, maxDepth, dimension);

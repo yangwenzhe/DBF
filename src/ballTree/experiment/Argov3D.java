@@ -49,8 +49,9 @@ public class Argov3D {
             dataSetMap = deSerializationZcurve(zcurveFilePath);
             histogramList = generateHistogram();
             totalNumberOfLine =205942;
-            total_query_number = 10;
-            int[] queryList =new int[]{595,91,386,888,378,806,300,317,773,203};
+
+            int[] queryList =new int[]{1};
+            total_query_number = queryList.length;
             ArrayList<Integer> arrayList = new ArrayList<>();
             for (int t = 0; t<queryList.length; t++){
                 arrayList.add(queryList[t]);
@@ -71,7 +72,7 @@ public class Argov3D {
         resolution = 7;
         int[] topkList = new int[]{10};
         totalNumberOfLine = 205942;
-        int[] queryList = new int[]{595,91,386,888,378,806,300,317,773,203};
+        int[] queryList = new int[]{1};
         zcurveFilePath = "data\\argoverse\\Argov-3D-"+resolution+".ser";
         dataSetMap = deSerializationZcurve(zcurveFilePath);
         histogramList = generateHistogram();

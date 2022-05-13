@@ -88,13 +88,10 @@ public class cross_respo {
 
 
     public static void three_repository() throws IOException,CloneNotSupportedException{
-        int[] topkList = new int[]{5,10,15,20,25,30};//{10,20,30,40,50,60};//
+        int[] topkList = new int[]{10};
         for (int t = 0; t<resolutionList.length;t++){
             resolution = resolutionList[t];
-            int[] queryList = {595,91,386,888,378,806,300,317,773,203};
-            //{ 2872, 2071, 6632, 1865, 506, 2191, 8900, 3963, 9362, 1148};//iden combine
-            //{595,91,386,888,378,806,300,317,773,203};//pub
-            //2, 3815,13583,1316,384,5182,1236,17564,6423,13331 ;//track:
+            int[] queryList = {1};
 
             total_query_count = queryList.length;
             ArrayList<Integer> arrayList = new ArrayList<>();
@@ -126,7 +123,7 @@ public class cross_respo {
         for (int t =0; t<resolutionList.length; t++){
             resolution = resolutionList[t];
             // random select query datasets
-            int[] queryList =  { 2872, 2071, 6632, 1865, 506, 2191, 8900, 3963, 9362, 1148};
+            int[] queryList =  { 2872 };
             total_query_count = queryList.length;
             ArrayList<Integer> arrayList = new ArrayList<>();
             for (int i = 0; i<queryList.length; i++){
@@ -135,7 +132,7 @@ public class cross_respo {
             String[] fourDataSetName = new String[]{"trackable","identifiable","public"};//
             int name = Integer.parseInt(System.getProperty("name"));
             String datasetName = fourDataSetName[name];
-            int[] topkList = new int[]{10,20,30,40,50,60};//
+            int[] topkList = new int[]{10};//
             zcurveFilePath = "/home/gr/wzyang/java/"+datasetName+"/"+datasetName+"-"+resolution+".ser";
             switch (datasetName) {
                 case "trackable":
@@ -230,17 +227,13 @@ public class cross_respo {
         }
     }
 
-    public static void dataSkew() throws IOException,CloneNotSupportedException{
-
-    }
-
     public static void main(String[] args)throws CloneNotSupportedException,IOException{
 //        ArrayList<Integer> arrayList = generateQuery(1,1000, 20);
 //        for (int i = 0; i<arrayList.size(); i++){
 //            System.out.println(arrayList.get(i));
 //        }
-//        cross_query();
-        three_repository();
+        cross_query();
+//        three_repository();
 
     }
 
