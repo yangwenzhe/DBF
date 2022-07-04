@@ -1,5 +1,10 @@
 # DBF
- How to use
+Introduction
+-------------
+   This repo holds the source code and scripts for reproducing the key experiments of fast dataset search with earth mover's distance.
+   Download our technical report here: https://github.com/yangwenzhe/DBF/xxxx.pdf
+
+Usage
  ======     
 1, Download the necessary dependency from ./mvn_denpendency/torch-clus
 ---------
