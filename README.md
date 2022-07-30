@@ -2,13 +2,15 @@
 Introduction
 -------------
    This repo holds the source code and scripts for reproducing the key experiments of fast dataset search with earth mover's distance.
-   Download our technical report here: https://github.com/yangwenzhe/DBF/xxxx.pdf
+   Download our technical report here: http://shengwang.site/papers/22VLDB-tr.pdf
 
 Usage
  ======     
-1, Download the necessary dependency from ./mvn_denpendency/torch-clus
+1, Download the necessary dependency
 ---------
-2, Add dependency in ./pom.xml:
+Please download the 'torch-clus' folder from the above DBF/mvn_denpendency/torch-clus/ directory and put it in your own maven repository, this torch-clus repository provide the implementation of data structures "indexNode" and "Ball tree".
+
+2, Import the dependency 'torch-clus-0.0.1-SNAPSHOT.jar' into the DBF/pom.xml
 -------------
     <dependency>
        <groupId>torch-clus</groupId>
